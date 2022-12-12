@@ -1,7 +1,12 @@
 <?php
+
 session_start();
 require 'functions.php';
+
+$id_tim = $_SESSION['ID_AKUN'];
+$data = query("SELECT * FROM TIM WHERE NOT ID_AKUN = '$id_tim'");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -48,7 +53,7 @@ require 'functions.php';
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link active" href="overview.php">
+                            <a class="nav-link" href="overview.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Overview
                             </a>
@@ -56,7 +61,7 @@ require 'functions.php';
                                 <div class="sb-nav-link-icon"><i class="fab fa-atlassian"></i></div>
                                 Tim
                             </a>
-                            <a class="nav-link" href="gameplay.php">
+                            <a class="nav-link active" href="gameplay.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-bullhorn"></i></div>
                                 Gameplay
                             </a>
@@ -168,34 +173,32 @@ require 'functions.php';
                                 </div>
                             </div>
                         </div> -->
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Formasi
-                                    </div>
-                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                        </div>
+                       
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                DataTable Example
+                                Nama Tim
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
+                                        <tr>
+                                            <th>Nama Tim</th>
+                                            <th>Level</th>
+                                            <th>Exp</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </tbody>
+                                    <tbody>
+                                        <?php foreach ($data as $tim) :?>
+                                        <tr>
+                                            <td><?= $tim['NAMA_TIM'] ?></td>
+                                            <td><?= $tim['LEVEL_TIM'] ?></td>
+                                            <td><?= $tim['EXP_TIM'] ?></td>
+                                            
+                                            <td><a href="tantang.php/id='<?= $tim['ID_TIM'] ?>'"><button type="button" class="btn btn-primary">Lawan!</button></a></td>
+                                        </tr>    
+                                        <?php endforeach ?>
                                         
                                     </tbody>
                                 </table>
